@@ -2,8 +2,8 @@
   "movies": [
     {
       "id": 1,
-      "title": "Втеча з Шоушенка - 2",
-      "director": "Frank Darabont",
+      "title": "New JS",
+      "director": "Somebody",
       "genres": [
         "Drama"
       ],
@@ -18,17 +18,6 @@
         "Drama"
       ],
       "rating": 9.2
-    },
-    {
-      "id": 3,
-      "title": "Темний лицар",
-      "director": "Christopher Nolan",
-      "genres": [
-        "Action",
-        "Crime",
-        "Drama"
-      ],
-      "rating": 9
     },
     {
       "id": 4,
@@ -145,12 +134,8 @@
       "id": 14
     },
     {
-      "title": "NODEJS",
-      "director": "Me",
-      "genres": [
-        "Drama"
-      ],
-      "rating": 10,
+      "title": "New movie JS",
+      "director": "You",
       "id": 15
     },
     {

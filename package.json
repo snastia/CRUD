@@ -1,7 +1,7 @@
 {
   "name": "my-project",
   "browserslist": "> 0.5%, last 2 versions, not dead",
-  "source": "src/index.js",
+  "source": "src/index.html",
   "main": "dist/index.js",
   "scripts": {
     "start": "parcel",
@@ -12,6 +12,7 @@
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "constants-browserify": "^1.0.0",
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
     "parcel": "^2.9.3",
@@ -27,5 +28,18 @@
   },
   "dependencies": {
     "json-server": "^0.17.3"
-  }
+  },
+  "description": "",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snastia/CRUD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snastia/CRUD/issues"
+  },
+  "homepage": "https://github.com/snastia/CRUD#readme"
 }
