@@ -103,12 +103,12 @@ function getFruit(name) {
     return Promise.resolve(fruits[name]);
   }
 
-    async function aMakeSmoothie(){
-       const kiwi = await getFruit("kiwi")
-       console.log(kiwi)
+async function aMakeSmoothie(){
+    const kiwi = await getFruit("kiwi")
+    console.log(kiwi)
 
-       const apple = await getFruit("apple")
-       console.log(apple)
+    const apple = await getFruit("apple")
+    console.log(apple)
     }
 
     aMakeSmoothie()
