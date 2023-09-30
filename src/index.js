@@ -1,29 +1,43 @@
-const { bodyParser } = require("json-server");
+import postTpl from "./postTpl.handlebars"
 
-const BASE_URL = 'http://localhost:3000';
+// const { bodyParser } = require("json-server");
 
-//  метод get
+// const { domainToUnicode } = require("url")
 
-// function getMovies(){
-//     return fetch(`${BASE_URL}/movies`)
-//     .then(response => response.json())
+// const BASE_URL = 'http://localhost:3000';
+
+// //  метод get
+
+// async function getMovies(){
+//   try{
+//      const getMovies = await fetch(`${BASE_URL}/movies`)
+//      const parcedData = await fetch.json()
+//      return parcedData
+//   } catch(error){
+//     console.log(error);
+//   }
 // }
 
-// function getMoviesById(movieId){
-//     return fetch(`${BASE_URL}/movies/${movieId}`)
-//     .then(response => response.json())
+// async function getMoviesById(movieId){
+//   try{
+//     const fetchById = await fetch(`${BASE_URL}/movies/${movieId}`)
+//     const parcedById = await fetch.json()
+//     return parcedById
+//  } catch(error){
+//    console.log(error);
+//  }
 // }
 
 // const newMovie = {
-//         title: "JS",
-//         director: "Me",
-//         genres: [
-//             "Drama"
-//         ],
-//         ration: 10
+//       title: "JS",
+//       director: "Me",
+//       genres: [
+//           "Drama"
+//       ],
+//       ration: 10
 // }
 
-// function createMovie(){
+// async function createMovie(){
 //     const options = {
 //     method: POST,
 //     headers:{
@@ -31,13 +45,20 @@ const BASE_URL = 'http://localhost:3000';
 //     },
 //     body: JSON.stringify(newMovie)
 // }
-//     return fetch(`${BASE_URL}/movies`, options)
+//    try{
+//       const result = await fetch(`${BASE_URL}/movies`, options)
+//       const parsed = await result.json()
+//       return parsed
+//    } catch(error){
+//     console.log(error);
+//    }
+    
 // }
 
 
-// patch
+// // patch
 
-// function updateMovieById(bookId, update) {
+// async function updateMovieById(bookId, update) {
 //     const options = {
 //         method: "PATCH",
 //         headers: {
@@ -45,8 +66,14 @@ const BASE_URL = 'http://localhost:3000';
 //         },
 //         body: JSON.stringify(update)
 //     }
-//    return fetch(`${BASE_URL}/movies/${bookId}`, options)
-//    .then(res => res.json())
+//     try{
+//        const movie = await fetch(`${BASE_URL}/movies/${bookId}`, options)
+//        const parcedMovie = await movie.json()
+//        return parcedMovie
+//     } catch (error){
+//        console.log(error)
+//     }
+   
 // }
 
 // updateMovieById(1, {
@@ -54,12 +81,18 @@ const BASE_URL = 'http://localhost:3000';
 //     director: "Somebody",
 // }).then(res => console.log(res))
 
-// function deleteMovie(id){
+// async function deleteMovie(id){
 //    const options = {
 //         method: "DELETE"
 //    }
-//    return fetch(`${BASE_URL}/movies/${id}`, options)
-//    .then(res => res.json())
+//    try{
+//        const movie = await fetch(`${BASE_URL}/movies/${id}`, options)
+//        const deleteMovie = await res.json()
+//        return deleteMovie
+//    } catch(error){
+//     console.log(error);
+//    }
+  
 // }
 
 // deleteMovie(3).then(res => console.log(res))
@@ -78,46 +111,143 @@ const BASE_URL = 'http://localhost:3000';
 // }, 500)
 
 
-const validJSON = '{ "name": "Манго", "age": 3 }';
-const invalidJSON = '{ бекенд повернув якусь нісенітницю }';
+// const validJSON = '{ "name": "Манго", "age": 3 }';
+// const invalidJSON = '{ бекенд повернув якусь нісенітницю }';
 
-function checkValid(obj){
-    try {
-      return JSON.parse(obj)
-    } catch(error) {
-       console.log("бекенд повернув якусь нісенітницю")
-    }
-}
+// function checkValid(obj){
+//     try {
+//       return JSON.parse(obj)
+//     } catch(error) {
+//        console.log("бекенд повернув якусь нісенітницю")
+//     }
+// }
 
-checkValid(validJSON)
-checkValid(invalidJSON)
+// checkValid(validJSON)
+// checkValid(invalidJSON)
 
 
-function getFruit(name) {
-    const fruits = {
-      strawberry: '🍓',
-      kiwi: '🥝 ',
-      apple: '🍎',
-    };
+// function getFruit(name) {
+//     const fruits = {
+//       strawberry: '🍓',
+//       kiwi: '🥝 ',
+//       apple: '🍎',
+//     }
   
-    return Promise.resolve(fruits[name]);
-  }
+//     return new Promise((resolve) =>{
+//       setTimeout(() => {
+//          resolve(fruits[name]);
+//       }, 500)
+//   })
+// }
+// async function aMakeSmoothie(){
+//     const kiwi = await getFruit("kiwi")
+//     console.log(kiwi)
 
-async function aMakeSmoothie(){
-    const kiwi = await getFruit("kiwi")
-    console.log(kiwi)
+//     const apple = await getFruit("apple")
+//     console.log(apple)
+    
+//     const strawberry = await getFruit("strawberry")
+//     console.log(strawberry)
 
-    const apple = await getFruit("apple")
-    console.log(apple)
-    }
+//     const smothie = await Promise.all([kiwi, apple, strawberry])
+//     console.log(smothie)
+//     }   
 
-    aMakeSmoothie()
+//     aMakeSmoothie()
 
 //   function makeSmoothie() {
 //     getFruit("kiwi").then((res) => {
 //         console.log(res)
 //         getFruit("apple").then(console.log)
-//     })
-//   }
+  //   })
+  // }
 
-//   makeSmoothi()
+  // makeSmoothi()
+
+const BASE_URL = 'http://localhost:3000/posts'
+
+const postBoxEl = document.getElementById("postsContainer")
+
+
+async function getPosts() {
+    try {
+      const posts = await fetch(BASE_URL)
+      return await posts.json()
+    } catch (error) {
+    console.error(error)
+    }
+    }
+    console.log(getPosts())
+
+    // Створення нового поста
+    
+    async function createPost(title, content) {
+    try {
+    
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    
+    // Оновлення поста
+    
+    async function updatePost(id, title, content) {
+    try {
+    
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    
+    // Видалення поста
+    
+    async function deletePost(id) {
+    try {
+    
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    
+    // Додавання коментаря до поста
+    
+    async function createComment(postId, comment) {
+    try {
+    
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    
+    // Оновлення відображення постів на сторінці
+    
+    function renderPosts(posts) {
+      postBoxEl.insertAdjacentHTML("beforebegin", postTpl(posts))
+    }
+    
+    // Обробник події для створення поста
+    
+    // document.getElementById('createPostForm').addEventListener('submit', cb);
+    
+    // Обробник події для редагування поста
+    
+    // document.addEventListener('click', cb);
+    
+    // Обробник події для видалення поста
+    
+    // document.addEventListener('click', cb);
+    
+    // Обробник події для додавання коментаря
+    
+    // document.addEventListener('submit', cb);
+    
+    // Запуск додатку
+    
+    async function startApp() {
+    const posts = await getPosts();
+    
+    renderPosts(posts);
+     
+    }
+    
+    startApp()
