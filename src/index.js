@@ -1,3 +1,4 @@
+import axios from 'axios';
 import postTpl from "./postTpl.handlebars"
 
 // const { bodyParser } = require("json-server");
@@ -167,23 +168,26 @@ import postTpl from "./postTpl.handlebars"
 const BASE_URL = 'http://localhost:3000/posts'
 
 const postBoxEl = document.getElementById("postsContainer")
-
+const formEl = document.getElementById('createPostForm')
 
 async function getPosts() {
     try {
-      const posts = await fetch(BASE_URL)
+      const posts = await axios.get(BASE_URL)
       return await posts.json()
     } catch (error) {
-    console.error(error)
+    console.log(error)
     }
     }
     console.log(getPosts())
 
     // Створення нового поста
     
-    async function createPost(title, content) {
+    async function createPost(title, text) {
     try {
-    
+        await axios.post(BASE_URL, {
+        title,
+        text
+       })
     } catch (error) {
     console.error(error);
     }
@@ -191,7 +195,7 @@ async function getPosts() {
     
     // Оновлення поста
     
-    async function updatePost(id, title, content) {
+    async function updatePost(id, title, text) {
     try {
     
     } catch (error) {
@@ -203,7 +207,7 @@ async function getPosts() {
     
     async function deletePost(id) {
     try {
-    
+      
     } catch (error) {
     console.error(error);
     }
@@ -213,7 +217,7 @@ async function getPosts() {
     
     async function createComment(postId, comment) {
     try {
-    
+      
     } catch (error) {
     console.error(error);
     }
@@ -227,7 +231,15 @@ async function getPosts() {
     
     // Обробник події для створення поста
     
-    // document.getElementById('createPostForm').addEventListener('submit', cb);
+    formEl.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      const title = event.currentTarget.elements.title.value
+      const text = event.currentTarget.elements.text.value
+      createPost(title, text)
+      event.currentTarget.remove()
+      const posts = await getPosts()
+      renderPosts(posts)
+    });
     
     // Обробник події для редагування поста
     
@@ -235,7 +247,15 @@ async function getPosts() {
     
     // Обробник події для видалення поста
     
-    // document.addEventListener('click', cb);
+    postBoxEl.document.addEventListener('click', (e) => {
+         e.preventDefault()
+         if (e.target.classList.contains("deletePostButton")) {
+          const id = e.target.getAttribute("data-id")
+          e.preventDefault()
+          deletePost(id)
+          startApp()
+         }
+    });
     
     // Обробник події для додавання коментаря
     
