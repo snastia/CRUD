@@ -1,5 +1,6 @@
 import axios from 'axios';
 import postTpl from "./postTpl.handlebars"
+import { basename } from 'path-browserify';
 
 // const { bodyParser } = require("json-server");
 
@@ -172,13 +173,13 @@ const formEl = document.getElementById('createPostForm')
 
 async function getPosts() {
     try {
-      const posts = await axios.get(BASE_URL)
+      const posts = await fetch(BASE_URL)
       return await posts.json()
     } catch (error) {
     console.log(error)
     }
     }
-    console.log(getPosts())
+    // console.log(getPosts())
 
     // Створення нового поста
     
@@ -207,7 +208,7 @@ async function getPosts() {
     
     async function deletePost(id) {
     try {
-      
+       await axios.delete(`${BASE_URL}/${id}`)
     } catch (error) {
     console.error(error);
     }
@@ -217,16 +218,18 @@ async function getPosts() {
     
     async function createComment(postId, comment) {
     try {
-      
+      const comments = await axios.post(`${BASE_URL}/${postId}`, {
+        comment
+      })
     } catch (error) {
-    console.error(error);
+    console.log(error);
     }
     }
     
     // Оновлення відображення постів на сторінці
     
     function renderPosts(posts) {
-      postBoxEl.insertAdjacentHTML("beforebegin", postTpl(posts))
+      postBoxEl.innerHTML = postTpl(posts)
     }
     
     // Обробник події для створення поста
@@ -247,19 +250,26 @@ async function getPosts() {
     
     // Обробник події для видалення поста
     
-    postBoxEl.document.addEventListener('click', (e) => {
-         e.preventDefault()
+    postBoxEl.addEventListener('click', async (e) => {
          if (e.target.classList.contains("deletePostButton")) {
           const id = e.target.getAttribute("data-id")
-          e.preventDefault()
-          deletePost(id)
-          startApp()
+          console.log(id)
+          await deletePost(id)
+          await startApp()
          }
     });
     
     // Обробник події для додавання коментаря
     
-    // document.addEventListener('submit', cb);
+    postBoxEl.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      if (event.target.classList.contains("createCommentForm")) {
+        const id = event.target.getAttribute("data-id")
+        const value = event.target.elements.comment.value
+        await createComment(id, value)
+        await startApp()
+      }
+    });
     
     // Запуск додатку
     

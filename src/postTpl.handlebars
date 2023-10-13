@@ -11,14 +11,16 @@
     <h3>Коментарі:</h3>
     
     <ul>
+        {{#each comments}}
     <li>
-
+      {{this.comments}}
     </li>
+        {{/each}}
     </ul>
     
-    <form class="createCommentForm">
+    <form class="createCommentForm" data-id="{{id}}">
     
-    <input type="text" class="commentInput" placeholder="Новий коментар" required>
+    <input type="text" class="commentInput" name="comment" placeholder="Новий коментар" required>
     
     <button type="submit">Додати коментар</button>
     
